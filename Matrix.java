@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 public class Matrix{
     int n,m;
     String[][] elems;
@@ -17,5 +20,24 @@ public class Matrix{
 
     public Matrix(Matrix a){
         this(a.n,a.m,a.elems);
+    }
+
+    public void print(){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++)
+                System.out.println("["+i+","+j+"]: "+elems[i][j]);
+        }
+    }
+
+    public void print_to_file(String filename) throws ConcatenateMatrices.IncorrectInputException {
+        try {
+            PrintStream output = new PrintStream(filename);
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++)
+                    output.println("["+i+","+j+"]: "+elems[i][j]);
+            }
+        } catch (FileNotFoundException e) {
+            throw new ConcatenateMatrices.IncorrectInputException();
+        }
     }
 }
