@@ -102,6 +102,29 @@ public class ConcatenateMatrices {
             ans.print_to_file(output);
     }
 
+    public static void random_test(int n,int m,int cnt) {
+        try {
+            PrintStream output = new PrintStream("test.txt");
+            output.println(n+" "+m);
+            for(int i=0;i<cnt;i++){
+                Matrix next = Matrix.random_matrix(n,m);
+                for(int a=0;a<next.n;a++){
+                    String row = "";
+                    for(int b=0;b<next.m;b++) {
+                        row += next.elems[a][b];
+                        if(b<next.m-1)
+                            row+=" ";
+                    }
+                    output.println(row);
+                }
+            }
+            run("test.txt","test_res.text");
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible to write into test.txt");
+        }
+    }
+
+
     public static void main(String[] args) throws IOException, IncorrectInputException {
         String inputfile = "input.txt";
         String outputfile = "output.txt";
