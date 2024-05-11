@@ -1,39 +1,63 @@
 import java.util.*;
 import java.io.*;
 
+
 public class ConcatenateMatrices {
 
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(new File("vstup.txt"));
-        PrintStream output = new PrintStream("vystup.txt");
-        String vstup = scanner.nextLine(); //prvy riadok (velmi pravdepodobne ide nakodit lahsie)
-        String[] rozmery = vstup.split(" ");
-        int m = Integer.parseInt(rozmery[0]);
-        int n = Integer.parseInt(rozmery[1]);
+    public static class IncorrectInputException extends Exception{
+        IncorrectInputException(){
+            super("INCORRECT INPUT, PLEASE CHECK README.TXT OR RUN ConcatenateMatrices.help() FOR ASSISTANCE");
+        }
+    }
 
-        String[][] matrix = new String[m][]; //matica a jej vynulovanie
-        for (int k = 0; k < m; k++) {
-            matrix[k] = new String[n];
+    private static Matrix read_next_matrix(int n,int m,Scanner scanner) throws IncorrectInputException {
+        Matrix next = new Matrix(n,m);
+
+        for(int i=0;i<n;i++){
+            if(!scanner.hasNextLine())
+                throw new IncorrectInputException();
+            String line = scanner.nextLine();
+            String[] row = line.split(" ");
+            if(row.length!=m)
+                throw new IncorrectInputException();
+
+            for(int j=0;j<m;j++)
+                next.elems[i][j]=row[j];
         }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] = "";
-            }
+
+        return next;
+    }
+
+    private static List<Matrix> read(String filename) throws IncorrectInputException {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File("vstup.txt"));
+        } catch (FileNotFoundException e) {
+            throw new IncorrectInputException();
         }
-        while (scanner.hasNextLine()) { //cita pokial nenarazi na koniec (neexistujuci prvy riadok matice)
-            for (int i = 0; i < m; i++) { //ak je dalsi riadok, tak urcite bude m-riadkov matice
-                String riadok = scanner.nextLine(); //jeden riadok matice
-                String[] prvky = riadok.split(" "); //rozdelenie riadku na prvky (stlpce)
-                for (int j = 0; j < n; j++) { //prvky_length = n
-                    matrix[i][j] += prvky[j]; //pricitanie do vyslednej matice
-                }
-            }
+        try {
+            PrintStream output = new PrintStream("vystup.txt");
+        } catch (FileNotFoundException e) {
+            throw new IncorrectInputException();
         }
-        for (int i = 0; i < m; i++) { //formatovany vystup vyslednej matice
-            for (int j = 0; j < n; j++) {
-                output.printf("[%d,%d]: %s\n", i, j, matrix[i][j]);
-            }
-        }
-        scanner.close();
+
+        int n=0,m=0;
+        if(!scanner.hasNextInt())
+            throw new IncorrectInputException();
+        n=scanner.nextInt();
+
+        if(!scanner.hasNextInt())
+            throw new IncorrectInputException();
+        m=scanner.nextInt();
+
+        List<Matrix> input_matrices = new ArrayList<Matrix>();
+        while (scanner.hasNextLine())
+            input_matrices.add(read_next_matrix(n,m,scanner));
+
+        return input_matrices;
+    }
+
+    public static void main(String[] args) throws IOException {
+
     }
 }
