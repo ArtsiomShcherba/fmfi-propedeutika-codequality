@@ -45,7 +45,7 @@ public class Matrix{
 
     public static Matrix random_matrix(int n,int m){
         Matrix res = new Matrix(n,m);
-        byte[] utf = new byte[7]; //randomly select utf-8 code of char
+        byte[] utf = new byte[7]; //randomly select utf-8 code 
         Random rand =new Random();
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){

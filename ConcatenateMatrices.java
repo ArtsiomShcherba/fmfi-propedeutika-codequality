@@ -6,9 +6,11 @@ public class ConcatenateMatrices {
 
     protected static class IncorrectInputException extends Exception{
         IncorrectInputException(){
-            super("INCORRECT INPUT, PLEASE CHECK README.TXT OR RUN ConcatenateMatrices.help() FOR ASSISTANCE");
+            super("INCORRECT INPUT, PLEASE CHECK README.TXT");
         }
     }
+
+    //READING INPUT SECTION
 
     private static Matrix read_next_matrix(int n,int m,Scanner scanner) throws IncorrectInputException {
         Matrix next = new Matrix(n,m);
@@ -52,7 +54,7 @@ public class ConcatenateMatrices {
             throw new IncorrectInputException();
         m=scanner.nextInt();
 
-        if(consoleRead){
+        if(consoleRead){  //if console inpute we also should read count of matrices
             if(!scanner.hasNextInt())
                 throw new IncorrectInputException();
             cnt=scanner.nextInt();
@@ -63,7 +65,7 @@ public class ConcatenateMatrices {
         scanner.nextLine(); //we should skip the first line to continue reading
 
         List<Matrix> input_matrices = new ArrayList<Matrix>();
-        while (scanner.hasNextLine()&&cnt!=0) {
+        while (cnt>0&&scanner.hasNextLine()) {
             input_matrices.add(read_next_matrix(n, m, scanner));
             cnt--;
         }
@@ -71,6 +73,7 @@ public class ConcatenateMatrices {
         return input_matrices;
     }
 
+    //FUNCTIONAL SECTION
     public static Matrix concatenate(Matrix a, Matrix b) throws IncorrectInputException {
         Matrix res = new Matrix(a);
         if(res.n!=b.n||res.m!=b.m)
@@ -102,11 +105,13 @@ public class ConcatenateMatrices {
             ans.print_to_file(output);
     }
 
+    //TESTING SECTION
+
     public static void random_test(int n,int m,int cnt) {
         try {
             PrintStream output = new PrintStream("test.txt");
             output.println(n+" "+m);
-            for(int i=0;i<cnt;i++){
+            for(int i=0;i<cnt;i++){ //add matrix to test.txt
                 Matrix next = Matrix.random_matrix(n,m);
                 for(int a=0;a<next.n;a++){
                     String row = "";
