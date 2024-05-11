@@ -65,7 +65,7 @@ public class ConcatenateMatrices {
         scanner.nextLine(); //we should skip the first line to continue reading
 
         List<Matrix> input_matrices = new ArrayList<Matrix>();
-        while (cnt>0&&scanner.hasNextLine()) {
+        while (cnt!=0&&scanner.hasNextLine()) {
             input_matrices.add(read_next_matrix(n, m, scanner));
             cnt--;
         }
@@ -131,8 +131,8 @@ public class ConcatenateMatrices {
 
 
     public static void main(String[] args) throws IOException, IncorrectInputException {
-        String inputfile = "input.txt";
-        String outputfile = "output.txt";
+        String inputfile = "console";
+        String outputfile = "console";
         run(inputfile,outputfile);
     }
 }
