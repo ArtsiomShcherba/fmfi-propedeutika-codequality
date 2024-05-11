@@ -4,7 +4,7 @@ import java.io.*;
 
 public class ConcatenateMatrices {
 
-    public static class IncorrectInputException extends Exception{
+    private static class IncorrectInputException extends Exception{
         IncorrectInputException(){
             super("INCORRECT INPUT, PLEASE CHECK README.TXT OR RUN ConcatenateMatrices.help() FOR ASSISTANCE");
         }
@@ -55,6 +55,27 @@ public class ConcatenateMatrices {
             input_matrices.add(read_next_matrix(n,m,scanner));
 
         return input_matrices;
+    }
+
+    public static Matrix concatenate(Matrix a, Matrix b) throws IncorrectInputException {
+        Matrix res = new Matrix(a);
+        if(res.n!=b.n||res.m!=b.m)
+            throw new IncorrectInputException();
+        for(int i=0;i<res.n;i++){
+            for(int j=0;j<res.m;j++)
+                res.elems[i][j]+=b.elems[i][j];
+        }
+        return res;
+    }
+
+    public static Matrix concatenate_all(List<Matrix> matrices) throws IncorrectInputException {
+        if(matrices.isEmpty())
+            throw new IncorrectInputException();
+        Matrix res = new Matrix(matrices.get(0));
+
+        for(int i=1;i<matrices.size();i++)
+            res = concatenate(res,matrices.get(i)); //we concatenate matrices 1 by 1
+        return res;
     }
 
     public static void main(String[] args) throws IOException {
